@@ -6066,6 +6066,12 @@ var dart = [
     get$onClick: function(receiver) {
       return H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(receiver, "click", false), [null]);
     },
+    get$onMouseEnter: function(receiver) {
+      return H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(receiver, "mouseenter", false), [null]);
+    },
+    get$onMouseLeave: function(receiver) {
+      return H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(receiver, "mouseleave", false), [null]);
+    },
     $isInterceptor: 1,
     "%": ";Element"
   },
@@ -6543,6 +6549,12 @@ var dart = [
     get$onClick: function(receiver) {
       return H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(receiver, "click", false), [null]);
     },
+    get$onMouseEnter: function(receiver) {
+      return H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(receiver, "mouseenter", false), [null]);
+    },
+    get$onMouseLeave: function(receiver) {
+      return H.setRuntimeTypeInfo(new W._ElementEventStreamImpl(receiver, "mouseleave", false), [null]);
+    },
     $isInterceptor: 1,
     "%": "SVGAltGlyphDefElement|SVGAltGlyphItemElement|SVGComponentTransferFunctionElement|SVGDescElement|SVGDiscardElement|SVGFEDistantLightElement|SVGFEFuncAElement|SVGFEFuncBElement|SVGFEFuncGElement|SVGFEFuncRElement|SVGFEMergeNodeElement|SVGFEPointLightElement|SVGFESpotLightElement|SVGFontElement|SVGFontFaceElement|SVGFontFaceFormatElement|SVGFontFaceNameElement|SVGFontFaceSrcElement|SVGFontFaceUriElement|SVGGlyphElement|SVGHKernElement|SVGMetadataElement|SVGMissingGlyphElement|SVGStopElement|SVGStyleElement|SVGTitleElement|SVGVKernElement;SVGElement"
   },
@@ -6983,6 +6995,7 @@ var dart = [
     $.settingsdiv = document.querySelector("#settingsdiv");
     $.settings = document.querySelector("#settings");
     $.settingsp = document.querySelector("#settingsp");
+    $.settingsnotification = document.querySelector("#settingsnotification");
     M.start();
   }, "call$0", "main$closure", 0, 0, 1],
   start: function() {
@@ -6992,8 +7005,10 @@ var dart = [
     H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new M.start_closure()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
     t1 = J.get$onClick$x($.mplayerbutton);
     H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new M.start_closure0()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
-    t1 = J.get$onClick$x($.settings);
+    t1 = J.get$onMouseEnter$x($.settings);
     H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new M.start_closure1()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
+    t1 = J.get$onClick$x($.settings);
+    H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new M.start_closure2()), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
   },
   buttonClicked: function(x, y, z) {
     var t1 = $.block1interior.style;
@@ -7028,23 +7043,38 @@ var dart = [
       (t1 && C.CssStyleDeclaration_methods).set$opacity(t1, "1");
     }
   }, "call$0", "secondFade$closure", 0, 0, 1],
+  cogMouseEnter: function(x) {
+    var t1;
+    if (x === 1) {
+      t1 = $.settingsnotification.style;
+      (t1 && C.CssStyleDeclaration_methods).set$opacity(t1, ".75");
+      t1 = $.settingsnotification.style;
+      t1.marginTop = "10px";
+      t1 = J.get$onMouseLeave$x($.settings);
+      H.setRuntimeTypeInfo(new W._EventStreamSubscription(0, t1._target, t1._eventType, W._wrapZone(new M.cogMouseEnter_closure(x)), t1._useCapture), [H.getTypeArgumentByIndex(t1, 0)])._tryResume$0();
+    }
+  },
   openSettings: [function() {
     var t1 = $.settingsp.style;
     (t1 && C.CssStyleDeclaration_methods).set$transitionDuration(t1, ".5s");
     t1 = $.settingsp.style;
     (t1 && C.CssStyleDeclaration_methods).set$opacity(t1, "1");
     $.settingsopen = true;
-    P.Timer_Timer($.get$menuDuration(), M.removeSettingsAnimations$closure());
+    P.Timer_Timer($.get$menuDuration(), M.goToRemoveSettingsAnimations$closure());
   }, "call$0", "openSettings$closure", 0, 0, 1],
   closeSettings: [function() {
     $.settingsopen = false;
-    M.removeSettingsAnimations();
+    M.removeSettingsAnimations(1);
   }, "call$0", "closeSettings$closure", 0, 0, 1],
-  removeSettingsAnimations: [function() {
+  goToRemoveSettingsAnimations: [function() {
+    M.removeSettingsAnimations(2);
+  }, "call$0", "goToRemoveSettingsAnimations$closure", 0, 0, 1],
+  removeSettingsAnimations: function(x) {
     J.get$classes$x($.settings).remove$1(0, "twist");
     J.get$classes$x($.settings).remove$1(0, "spinleft");
     J.get$classes$x($.settings).remove$1(0, "spinright");
-  }, "call$0", "removeSettingsAnimations$closure", 0, 0, 1],
+    $.cogSpin = x;
+  },
   start_closure: {
     "^": "Closure:2;",
     call$1: function(e) {
@@ -7060,31 +7090,58 @@ var dart = [
   start_closure1: {
     "^": "Closure:2;",
     call$1: function(e) {
+      return M.cogMouseEnter($.cogSpin);
+    }
+  },
+  start_closure2: {
+    "^": "Closure:2;",
+    call$1: function(e) {
       var t1, t2;
-      t1 = $.settingsopen;
-      t2 = $.settings;
-      if (!t1) {
-        J.get$classes$x(t2).add$1(0, "twist");
-        J.get$classes$x($.settings).add$1(0, "spinleft");
-        t1 = $.settingsdiv;
-        t2 = t1.style;
-        t2.width = "700px";
-        t1 = t1.style;
-        t1.height = "350px";
-        P.Timer_Timer($.get$menuDuration(), M.openSettings$closure());
-      } else {
-        J.get$classes$x(t2).add$1(0, "twist");
-        J.get$classes$x($.settings).add$1(0, "spinright");
-        t1 = $.settingsdiv;
-        t2 = t1.style;
-        t2.width = "64px";
-        t1 = t1.style;
-        t1.height = "64px";
-        t1 = $.settingsp.style;
-        (t1 && C.CssStyleDeclaration_methods).set$transitionDuration(t1, ".25s");
-        t1 = $.settingsp.style;
+      t1 = $.settingsnotification.style;
+      (t1 && C.CssStyleDeclaration_methods).set$opacity(t1, "0");
+      t1 = $.settingsnotification.style;
+      t1.marginTop = "20px";
+      t1 = $.cogSpin;
+      if (t1 === 1 || t1 === 2) {
+        $.cogSpin = 3;
+        t1 = $.settingsopen;
+        t2 = $.settings;
+        if (!t1) {
+          J.get$classes$x(t2).add$1(0, "twist");
+          J.get$classes$x($.settings).add$1(0, "spinleft");
+          t1 = $.settingsdiv;
+          t2 = t1.style;
+          t2.width = "700px";
+          t1 = t1.style;
+          t1.height = "350px";
+          P.Timer_Timer($.get$menuDuration(), M.openSettings$closure());
+        } else {
+          J.get$classes$x(t2).add$1(0, "twist");
+          J.get$classes$x($.settings).add$1(0, "spinright");
+          t1 = $.settingsdiv;
+          t2 = t1.style;
+          t2.width = "64px";
+          t1 = t1.style;
+          t1.height = "64px";
+          t1 = $.settingsp.style;
+          (t1 && C.CssStyleDeclaration_methods).set$transitionDuration(t1, ".25s");
+          t1 = $.settingsp.style;
+          (t1 && C.CssStyleDeclaration_methods).set$opacity(t1, "0");
+          P.Timer_Timer($.get$spinDuration(), M.closeSettings$closure());
+        }
+      }
+      return;
+    }
+  },
+  cogMouseEnter_closure: {
+    "^": "Closure:2;_captured_check_0",
+    call$1: function(e) {
+      var t1;
+      if (this._captured_check_0 === 1) {
+        t1 = $.settingsnotification.style;
         (t1 && C.CssStyleDeclaration_methods).set$opacity(t1, "0");
-        P.Timer_Timer($.get$spinDuration(), M.closeSettings$closure());
+        t1 = $.settingsnotification.style;
+        t1.marginTop = "20px";
       }
       return;
     }
@@ -7239,6 +7296,12 @@ J.get$length$asx = function(receiver) {
 };
 J.get$onClick$x = function(receiver) {
   return J.getInterceptor$x(receiver).get$onClick(receiver);
+};
+J.get$onMouseEnter$x = function(receiver) {
+  return J.getInterceptor$x(receiver).get$onMouseEnter(receiver);
+};
+J.get$onMouseLeave$x = function(receiver) {
+  return J.getInterceptor$x(receiver).get$onMouseLeave(receiver);
 };
 J.map$1$ax = function(receiver, a0) {
   return J.getInterceptor$ax(receiver).map$1(receiver, a0);
@@ -7456,8 +7519,10 @@ $.mplayerinterior = null;
 $.settingsdiv = null;
 $.settings = null;
 $.settingsp = null;
+$.settingsnotification = null;
 $.choice = 0;
 $.settingsopen = false;
+$.cogSpin = 1;
 (function(lazies) {
   var descriptorLength = 4;
   for (var i = 0; i < lazies.length; i += descriptorLength) {
