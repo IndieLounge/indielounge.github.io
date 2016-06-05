@@ -1,3 +1,4 @@
+
 body {
   background-image: url('https://i.imgur.com/xALx5Sm.jpg');
   background-position: center top;
@@ -284,15 +285,18 @@ body {
   border: none;
 }
 
+/* Properties specific to the single player div element in the first block */
 #splayerinterior{
   opacity: 0;
   padding: 0px;
 }
 
+/* Properties specific to the multi player div element in the first block */
 #mplayerinterior{
   opacity: 0;
 }
 
+/* Properties specific to the div containing the settings button below the first block */
 #settingsdiv{
   border: 5px solid white;
   width: 64px;
@@ -302,6 +306,7 @@ body {
   padding: 0px;
 }
 
+/* Properties specific to the settings button (cog) inside the settingsdiv */
 #settings{
   height:64px;
   width:64px;
@@ -316,6 +321,7 @@ body {
   float: left;
 }
 
+/* Properties specific to the title that appears inside the settings div once the menu is opened */
 #settingsp{
   width: 252px;
   margin-top: 0px;
@@ -333,6 +339,15 @@ body {
   vertical-align: top;
   transition-property: opacity, border, text-shadow, font-weight, box-shadow, background-color, margin;
   transition-duration: .5s;
+  opacity: 0;
+}
+
+/* Properties specific to the notification that appears below the settings div */
+#settingsnotification{
+  margin-top: 20px;
+  font-size: 20px;
+  transition-property: opacity, border, text-shadow, font-weight, box-shadow, background-color, margin;
+  transition-duration: .25s;
   opacity: 0;
 }
 
@@ -363,3 +378,4 @@ body {
 @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
 @-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
 @keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
