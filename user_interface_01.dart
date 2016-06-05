@@ -1,3 +1,4 @@
+
 import 'dart:html';
 import 'dart:async';
 
@@ -19,12 +20,14 @@ DivElement mplayerinterior;
 DivElement settingsdiv;
 ButtonElement settings;
 ParagraphElement settingsp;
+ParagraphElement settingsnotification;
 
 var fadeDuration = new Duration(milliseconds: 200);
 var spinDuration = new Duration(milliseconds: 1000);
 var menuDuration = new Duration(milliseconds: 500);
 int choice = 0;
 bool settingsopen = false;
+var cogSpin = 1;
 
 void main() {
   
@@ -48,6 +51,7 @@ void main() {
   settingsdiv = querySelector('#settingsdiv');
   settings = querySelector('#settings');
   settingsp = querySelector('#settingsp');
+  settingsnotification = querySelector('#settingsnotification');
   
   // Starts the program
   start();
@@ -64,8 +68,8 @@ void start(){
   mplayerbutton.onClick.listen((e) => buttonClicked(mplayerbutton, splayerbutton, directiveouter));
   
   //If the settings icon is clicked, calls upon appropriate method
-  settings.onClick.listen((e) => settingsClicked());
-  
+  settings.onMouseEnter.listen((e) => cogMouseEnter(cogSpin));
+  settings.onClick.listen((e) => settingsClickCheck());
 }
 
 //----------------------------------------------//
@@ -121,6 +125,41 @@ void secondFade(){
 //----------------------------------------------//
 //----------------------------------------------//
 
+//Called upon if mouse hovers over the settings button and makes any necessary changes. If mouse leaves settings button, calls upon the appropriate method.
+void cogMouseEnter(var x){
+  var check = x;
+  
+  //Checks state of settings menu. If open or transitioning (cogspin no equal to 1), the notification will not appear.
+  if (check == 1){
+    settingsnotification.style.opacity = '.75';
+    settingsnotification.style.marginTop = '10px';
+    settings.onMouseLeave.listen((e) => cogMouseLeave(check));
+  }
+}
+
+//Called when mouse leaves the settings button and makes any necessary changes.
+void cogMouseLeave(var x){
+  var check = x;
+  if (check == 1){
+    settingsnotification.style.opacity = '0';
+    settingsnotification.style.marginTop = '20px';
+  }
+}
+
+//Called upon when settings button is clicked. Ensures that the settings menu is not transitioning in order to continue.
+void settingsClickCheck(){
+  
+  //Ensures the settings notification is removed when button is clicked.
+  settingsnotification.style.opacity = '0';
+  settingsnotification.style.marginTop = '20px';
+  
+  if (cogSpin == 1 || cogSpin == 2){
+    //When cogSpin = 3, the settings menu is transitioning.
+    cogSpin = 3;
+    settingsClicked();
+  }
+}
+
 void settingsClicked(){
   
   //Checks if settings menu is open or closed. 
@@ -156,16 +195,22 @@ void openSettings(){
   settingsp.style.opacity= '1';
   settingsopen = true;
   
-  new Timer(menuDuration, removeSettingsAnimations);
+  new Timer(menuDuration, goToRemoveSettingsAnimations);
 }
 
 void closeSettings(){
   settingsopen = false;
-  removeSettingsAnimations();
+  removeSettingsAnimations(1);
 }
 
-void removeSettingsAnimations(){
+void goToRemoveSettingsAnimations(){
+  removeSettingsAnimations(2);
+}
+
+void removeSettingsAnimations(var x){
   settings.classes.remove('twist');
   settings.classes.remove('spinleft');
   settings.classes.remove('spinright');
+  cogSpin = x;
 }
+
