@@ -183,7 +183,7 @@ body {
 #title {
   width: 1000px;
   height: 100%;
-  margin-top: 0px;
+  margin-top: 15px;
   margin-bottom: 0px;
   transition-property: border, text-shadow, font-weight, box-shadow, background-color, margin;
   transition-duration: .05s;
